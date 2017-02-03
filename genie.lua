@@ -26,6 +26,9 @@ bgfxProject("", "StaticLib", {})
 -- project example-common
 dofile (path.join(BGFX_DIR, 'scripts/example-common.lua'))
 
+-- project bx
+dofile (path.join(BX_DIR, 'scripts/bx.lua'))
+
 -- project starter
 project('starter')
     kind('WindowedApp')
@@ -38,12 +41,14 @@ project('starter')
         path.join(SPDLOG_DIR, 'include')
     })
     links({
+        'bx',
         'bgfx',
         'example-common'
     })
-	configuration({ "vs20*", "x32 or x64" })
-		links {
-			"gdi32",
-			"psapi",
-		}
+    configuration({ "vs20*", "x32 or x64" })
+       links {
+           "gdi32",
+           "psapi",
+       }
+    configuration({})
 
