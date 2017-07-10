@@ -1,3 +1,5 @@
+#define ENTRY_CONFIG_IMPLEMENT_MAIN 1
+
 #include "bx/uint32_t.h"
 #include "entry/entry.h"
 #include "entry/input.h"
@@ -5,11 +7,16 @@
 #include "bgfx/bgfx.h"
 #include "bgfx_utils.h"
 #include <imgui/imgui.h>
-#include <imgui/ocornut_imgui.h>
 
 class ExampleHelloWorld : public entry::AppI
 {
-	void init(int _argc, char** _argv) BX_OVERRIDE
+public:
+  ExampleHelloWorld(char const* name, char const* description):
+    AppI(name, description)
+  {
+  }
+
+	void init(int _argc, char const * const * _argv, uint32_t w, uint32_t h) BX_OVERRIDE
 	{
 		Args args(_argc, _argv);
 
@@ -73,11 +80,6 @@ class ExampleHelloWorld : public entry::AppI
 			ImGui::DragFloat("sample var", &m_sampleVar, 0.1f, 0.0f, 100.0f);
 			ImGui::End();
 
-			imguiBeginScrollArea("whatever", 400, 100, 200, 400, &m_whateverscoll);
-			imguiLabel("Hello!");
-			imguiSlider("sample var", m_sampleVar, 0.0f, 100.0f, 0.1f);
-			imguiEndScrollArea();
-
 			// IMGUI_endFrame();
 			imguiEndFrame();
 
@@ -101,4 +103,4 @@ class ExampleHelloWorld : public entry::AppI
 	int m_whateverscoll = 0;
 };
 
-ENTRY_IMPLEMENT_MAIN(ExampleHelloWorld);
+ENTRY_IMPLEMENT_MAIN(ExampleHelloWorld, "hello world", "just say hello to the world");

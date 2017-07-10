@@ -1,6 +1,7 @@
 ROOT_DIR = path.getabsolute('.')
 BGFX_DIR = path.join(ROOT_DIR, '3rdparty/bgfx')
-BX_DIR = path.join(ROOT_DIR, '3rdparty/bx')
+BX_DIR   = path.join(ROOT_DIR, '3rdparty/bx')
+BIMG_DIR = path.join(ROOT_DIR, '3rdparty/bimg')
 SPDLOG_DIR = path.join(ROOT_DIR, '3rdparty/spdlog')
 local BUILD_DIR = ".build"
 local LIB_DIR = ".build/lib"
@@ -29,6 +30,11 @@ dofile (path.join(BGFX_DIR, 'scripts/example-common.lua'))
 -- project bx
 dofile (path.join(BX_DIR, 'scripts/bx.lua'))
 
+-- project bimg
+dofile (path.join(BIMG_DIR, 'scripts/bimg.lua'))
+dofile (path.join(BIMG_DIR, 'scripts/bimg_decode.lua'))
+dofile (path.join(BIMG_DIR, 'scripts/bimg_encode.lua'))
+
 -- project starter
 project('starter')
     kind('WindowedApp')
@@ -38,6 +44,7 @@ project('starter')
         path.join(BGFX_DIR, 'examples/common'),
         path.join(BGFX_DIR, '3rdparty'),
         path.join(BX_DIR, 'include'),
+        path.join(BIMG_DIR, 'include'),
         path.join(SPDLOG_DIR, 'include')
     })
     links({
@@ -49,6 +56,8 @@ project('starter')
        links {
            "gdi32",
            "psapi",
+           "bimg",
+           "bimg_decode",
        }
     configuration({})
 
