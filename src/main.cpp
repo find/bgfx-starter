@@ -20,10 +20,8 @@ public:
 	{
 		Args args(_argc, _argv);
 
-		m_width = 1280;
-		m_height = 720;
-		m_debug = 0;
-		m_reset = BGFX_RESET_VSYNC;
+		m_width = w;
+		m_height = h;
 
 		bgfx::init(args.m_type, args.m_pciId);
 		bgfx::reset(m_width, m_height, m_reset);
@@ -78,6 +76,10 @@ public:
 			ImGui::Begin("ImGui");
 			ImGui::Text("Hello!");
 			ImGui::DragFloat("sample var", &m_sampleVar, 0.1f, 0.0f, 100.0f);
+      if (ImGui::Button("Toogle Debug")) {
+        m_debug ^= BGFX_DEBUG_STATS;
+        bgfx::setDebug(m_debug);
+      }
 			ImGui::End();
 
 			// IMGUI_endFrame();
@@ -96,11 +98,11 @@ public:
 	entry::MouseState m_mouseState;
 	float m_sampleVar = 0.0f;
 
-	uint32_t m_width;
-	uint32_t m_height;
-	uint32_t m_debug;
-	uint32_t m_reset;
-	int m_whateverscoll = 0;
+	uint32_t m_width = 800;
+	uint32_t m_height = 600;
+	uint32_t m_debug = 0;
+	uint32_t m_reset = 0;
+	int m_whateverscoll = BGFX_RESET_VSYNC;
 };
 
 ENTRY_IMPLEMENT_MAIN(ExampleHelloWorld, "hello world", "just say hello to the world");

@@ -61,3 +61,7 @@ project('starter')
        }
     configuration({})
 
+-- tools
+dofile (path.join(BGFX_DIR, 'scripts/shaderc.lua'))
+dofile (path.join(BGFX_DIR, 'scripts/texturec.lua'))
+
