@@ -60,6 +60,9 @@ project('starter')
            "bimg_decode",
        }
     configuration({})
+    prebuildcommands({
+        -- 'pushd src & gnumake & popd'
+    })
 
 -- tools
 dofile (path.join(BGFX_DIR, 'scripts/shaderc.lua'))
