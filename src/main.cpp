@@ -26,8 +26,17 @@ public:
     m_width = w;
     m_height = h;
     m_lastTime = bx::getHPCounter();
+    m_debug = BGFX_DEBUG_TEXT;
+    m_reset = BGFX_RESET_VSYNC;
 
-    bgfx::init(args.m_type, args.m_pciId);
+    bgfx::Init init;
+    init.type = args.m_type;
+    init.vendorId = args.m_pciId;
+    init.resolution.width = m_width;
+    init.resolution.height = m_height;
+    init.resolution.reset = m_reset;
+
+    bgfx::init(init);
     bgfx::reset(m_width, m_height, m_reset);
 
     // Enable debug text.
@@ -86,6 +95,9 @@ public:
       bgfx::setDebug(m_debug);
     }
     ImGui::End();
+
+	showExampleDialog(this);
+
     imguiEndFrame();
 
     bgfx::dbgTextClear();
@@ -107,19 +119,10 @@ public:
       float view[16] = { 0 }, proj[16] = { 0 };
       cameraGetViewMtx(view);
 
-      const bgfx::HMD* hmd = bgfx::getHMD();
-      if (NULL != hmd && 0 != (hmd->flags & BGFX_HMD_RENDERING)) {
-        float eye[3];
-        cameraGetPosition(eye);
-        bx::mtxQuatTranslationHMD(view, hmd->eye[0].rotation, eye);
-        bgfx::setViewTransform(0, view, hmd->eye[0].projection, BGFX_VIEW_STEREO, hmd->eye[1].projection);
-        bgfx::setViewRect(0, 0, 0, hmd->width, hmd->height);
-      } else {
-        bx::mtxProj(proj, 60.0f, float(m_width) / float(m_height), 0.1f, 100.0f, bgfx::getCaps()->homogeneousDepth);
+      bx::mtxProj(proj, 60.0f, float(m_width) / float(m_height), 0.1f, 100.0f, bgfx::getCaps()->homogeneousDepth);
 
-        bgfx::setViewTransform(0, view, proj);
-        bgfx::setViewRect(0, 0, 0, uint16_t(m_width), uint16_t(m_height));
-      }
+      bgfx::setViewTransform(0, view, proj);
+      bgfx::setViewRect(0, 0, 0, uint16_t(m_width), uint16_t(m_height));
 
 
       // Set view 0 default viewport.

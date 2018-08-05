@@ -50,7 +50,8 @@ project('starter')
     links({
         'bx',
         'bgfx',
-        'example-common'
+        'example-common',
+        'example-glue'
     })
     configuration({ "vs20*", "x32 or x64" })
        links {
