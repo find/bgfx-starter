@@ -95,7 +95,7 @@ public:
     }
     ImGui::End();
 
-	showExampleDialog(this);
+    showExampleDialog(this);
 
     imguiEndFrame();
 
@@ -131,8 +131,8 @@ public:
       // if no other draw calls are submitted to view 0.
       bgfx::touch(0);
 
-	  DebugDrawEncoder dde;
-	  dde.begin(0);
+      DebugDrawEncoder dde;
+      dde.begin(0);
       bx::Vec3 center = { 0,0,0 };
       dde.drawGrid(Axis::Y, center, 20, 0.1f);
       dde.push();
