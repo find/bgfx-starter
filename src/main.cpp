@@ -53,8 +53,7 @@ public:
     imguiCreate();
 
     cameraCreate();
-    float const initCameraPos[] = { 0.f, 2.f, -12.f };
-    cameraSetPosition(initCameraPos);
+    cameraSetPosition({ 0.f, 2.f, -12.f });
     ddInit();
   }
 
@@ -132,16 +131,17 @@ public:
       // if no other draw calls are submitted to view 0.
       bgfx::touch(0);
 
-      ddBegin(0);
-      float center[3] = { 0,0,0 };
-      ddDrawGrid(Axis::Y, center, 20, 0.1f);
-      ddPush();
-      ddSetColor(0xffaabbff);
-      float from[3] = { 0,0,0 };
-      float to[3] = { 3,4,5 };
-      ddDrawCylinder(from, to, 0.2f);
-      ddPop();
-      ddEnd();
+	  DebugDrawEncoder dde;
+	  dde.begin(0);
+      bx::Vec3 center = { 0,0,0 };
+      dde.drawGrid(Axis::Y, center, 20, 0.1f);
+      dde.push();
+      dde.setColor(0xffaabbff);
+      bx::Vec3 from = { 0,0,0 };
+      bx::Vec3 to   = { 3,4,5 };
+      dde.drawCylinder(from, to, 0.2f);
+      dde.pop();
+      dde.end();
 
       // Advance to next frame. Rendering thread will be kicked to
       // process submitted rendering primitives.
